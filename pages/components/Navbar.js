@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
 const Navbar = (props) => {
+
+  const [srch, setSrch] = useState("")
+
+  const handleChange = (e) => {
+    setSrch(e.target.value)
+    props.childToParent(e.target.value)
+  }
+
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark ">
       <div className="container-fluid">
@@ -15,14 +23,18 @@ const Navbar = (props) => {
         <div className="collapse navbar-collapse justify-content-center navBtns" id="navbarSupportedContent">
           <ul className="navbar-nav  me-auto mb-2 mb-lg-0 ">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
+              <Link href={"/"}>
+                <a className="nav-link active" aria-current="page" href="/">Home</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Scholarships</a>
+              <Link href={"/scholarship"}>
+                <a className="nav-link" href="/scholarship">Scholarships</a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Category
+                Filter
               </a>
               <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="#">Government Scholarships</a></li>
@@ -34,7 +46,8 @@ const Navbar = (props) => {
           </ul>
           {
             props.search ? (<form className="d-flex" role="search">
-              <input className="form-control me-5" type="search" placeholder="Search" aria-label="Search" />
+              <input className="form-control me-5" name="srch"
+                id="srch" type="search" placeholder="Search" value={srch} onChange={handleChange} aria-label="Search" />
             </form>) : (<></>)
           }
 
